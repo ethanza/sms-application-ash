@@ -57,7 +57,7 @@ const upload = async (req, res) => {
     }
 
     let path =
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename;
+      __basedir + "/public/resources/uploads/" + req.file.filename;
 
     readXlsxFile(path).then((rows) => {
  

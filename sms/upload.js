@@ -13,7 +13,8 @@ const excelFilter = (req, file, cb) => {
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __basedir + "resources/static/assets/uploads/");
+    debugger;
+    cb(null, __basedir + "/public/resources/uploads/");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
