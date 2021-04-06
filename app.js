@@ -19,11 +19,8 @@ app.get('/index', (req, res) => {
 });
 
 app.get('/success', (req, res) =>{
-  debugger;
   fs.createReadStream('success.html').pipe(res)
 })
-
-
 
 app.use('/sms', require('./sms'));
 
