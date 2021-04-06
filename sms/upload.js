@@ -13,7 +13,6 @@ const excelFilter = (req, file, cb) => {
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    debugger;
     cb(null, __basedir + "/public/resources/uploads/");
   },
   filename: (req, file, cb) => {

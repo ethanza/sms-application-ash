@@ -3,6 +3,7 @@ const {
   default: readXlsxFileNode,
 } = require("read-excel-file/commonjs/readXlsxFileNode");
 const readXlsxFile = require("read-excel-file/node");
+const sendSms = require('./sendSms');
 
 // https://bezkoder.com/node-js-upload-excel-file-database/
 
@@ -30,12 +31,11 @@ const getSMSHandler = async (req) => {
           </SENDBATCH>
        </XML>`;
 
+        // sendSms(body);
         console.log(body);
       }
     }
-
-    // console.log(`Dear value client, your car has been booked in with  ${entry[0]} for ${entry[1]}`);
-  });
+   });
 };
 
 const getServiceAdvisor = (entry) => {
@@ -98,7 +98,7 @@ const upload = async (req, res) => {
         }
    
       }
-
+  
       res.status(200).send({
         message:"files uploaded" + content,
       });

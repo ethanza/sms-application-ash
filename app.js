@@ -18,21 +18,14 @@ app.get('/index', (req, res) => {
     fs.createReadStream('index.html').pipe(res)
 });
 
+app.get('/success', (req, res) =>{
+  debugger;
+  fs.createReadStream('success.html').pipe(res)
+})
 
-// router.route('/sms').get(require('./sms'));
+
 
 app.use('/sms', require('./sms'));
-
-
-//  router.route('/sms').get(require('./sms'));
-
-// router.route('/sms').get(require('./sms'));
-
-// router.route('/sms').post(
-//     express.json(),
-//     require('./sms'),
-// )
-
 
 app.use(express.static(__dirname + '/public'));
 
