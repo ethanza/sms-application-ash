@@ -1,0 +1,35 @@
+body {
+   margin: 0 auto;
+   max-width: 80%;
+   text-align: center;
+   background-color: #e7222e;
+   color: #fff;
+}
+h1 {
+    text-decoration: underline;
+}
+
+input {
+    width: 200px;
+}
+input[type=submit] {
+  
+    background-color: #B1C4FF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type=file] {
+   
+    background-color: #16588E;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
