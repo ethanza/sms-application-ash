@@ -3,7 +3,7 @@ const http = require('http');
 const fs = require('fs');
 const app = express();
 const router = express.Router();
-const port = 5000;
+const PORT = process.env.PORT || 5000
 const initRoutes = require('./routes/sms.routes');
 
 global.__basedir = __dirname + '/';
