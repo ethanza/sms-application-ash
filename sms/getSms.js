@@ -6,28 +6,6 @@ const readXlsxFile = require("read-excel-file/node");
 
 // https://bezkoder.com/node-js-upload-excel-file-database/
 
-// const excelFilter = (req, file, cb) => {
-//     if(
-//         file.mimetype.includes('excel') ||
-//         file.mimetype.includes('spreadsheetml')
-//     ){
-//         cb(null, true);
-//     }else{
-//         cb("please upload excel file.", false);
-//     }
-
-//     var storage = multer.diskStorage({
-//         destination: (req, file, cb) => {
-//             cb(null, __basedir + "/resources/static/assets/uploads/");
-//         },
-//         filename: (req, file, cb) => {
-//             console.log(file.originalname);
-//             cb(null, `${Date.now()}-bezkoder-${file.originalname}`);
-//         },
-//     });
-// }
-// var uploadFile = multer({storage: storage, filFilter: excelFilter});
-
 const getSMSHandler = async (req) => {
   xlsxFile("./Data.xlsx").then((rows) => {
     let service_advisor = "";
@@ -71,60 +49,18 @@ const getTime = (entry) => {
   return entry === "time";
 };
 
-// const upload = async(req, res) => {
-
-//     try {
-//         if (req.file == undefined){
-//             return res.status(400).send("Please upload excel file!");
-//         }
-//         let path =  __basedir + "/resources/static/assets/uploads/" + req.file.filename;
-
-//         readXlsxFile(path).then((rows) => {
-//             let service_advisor = "";
-//             let contact_number = "";
-//             let time = "";
-//             for (let index = 0; index < rows.length; index++) {
-//               const entry = rows[index];
-//               if (index === 0) {
-//                 service_advisor = entry.findIndex(getServiceAdvisor);
-//                 contact_number = entry.findIndex(getContactNumber);
-//                 time = entry.findIndex(getTime);
-//               } else {
-//                 const uid = 1234;
-//                 const username = "username";
-//                 const password = "password";
-
-//                 const body = `<XML>
-//                   <SENDBATCH delivery_report="1" status_report="1">
-//                      <SMSLIST>
-//                        <SMS_SEND uid=${uid} user=${username} password=${password} to=${entry[contact_number]}>Dear Valued Customer, your vehicle is booked for ${entry[time]} with ${entry[service_advisor]}. Please ensure no valuables in the car.</SMS_SEND>
-//                      </SMSLIST>
-//                   </SENDBATCH>
-//                </XML>`;
-
-//               console.log(body);
-//               }
-//             }
-//         }
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send({
-//           message: "Could not upload the file: " + req.file.originalname,
-//         });
-//       }
-// };
-
 const upload = async (req, res) => {
+  let content = [];
   try {
     if (req.file == undefined) {
       return res.status(400).send("Please upload an excel file!");
     }
-    debugger;
+
     let path =
       __basedir + "/resources/static/assets/uploads/" + req.file.filename;
 
     readXlsxFile(path).then((rows) => {
-      debugger;
+ 
       let service_advisor = "";
       let contact_number = "";
       let time = "";
@@ -157,10 +93,16 @@ const upload = async (req, res) => {
               </SENDBATCH>
            </XML>`;
 
-          console.log(body);
+          content.push(body);
          
         }
+   
       }
+
+      res.status(200).send({
+        message:"files uploaded" + content,
+      });
+      return 'uploaded';
     });
   } catch (error) {
     console.log(error);
