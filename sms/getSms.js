@@ -12,6 +12,7 @@ const getSMSHandler = async (req) => {
     let service_advisor = "";
     let contact_number = "";
     let time = "";
+    let allSms = [];
     for (let index = 0; index < rows.length; index++) {
       const entry = rows[index];
       if (index === 0) {
@@ -20,8 +21,9 @@ const getSMSHandler = async (req) => {
         time = entry.findIndex(getTime);
       } else {
         const uid = 1234;
-        const username = "username";
+        const username = 'anna';
         const password = "password";
+        const type = 'sms';
 
         const body = `<XML>
           <SENDBATCH delivery_report="1" status_report="1">
@@ -31,8 +33,30 @@ const getSMSHandler = async (req) => {
           </SENDBATCH>
        </XML>`;
 
-        // sendSms(body);
-        console.log(body);
+      const smsBody =  `<?xml version="1.0" encoding="utf-8"?>
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://systinet.com/wsdl/bsi/service/"> 
+        <soapenv:Header/>   
+         <soapenv:Body>    
+            <ser:SendMessage> 	   
+                 <ser:p0>${username}</ser:p0> 	    
+                     <ser:p1>${type}</ser:p1> 	   
+                          <ser:p2>${entry[contact_numer]}</ser:p2> 	
+                                  <ser:p3>Dear Valued Client, thank you for booking your vehicle in at SMG Century City. 
+                                    Your vehicle is booked for Monday  at ${entry[time]}  with ${entry[service_advisor]}. To adhere to the current social distancing measures,
+                                    we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you.
+                                    Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues   
+                                    prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be 
+                                    able to make arrangements for your own transportation. We look forward to welcoming you to the dealership.
+                                    Stay Safe, Stay Healthy, Stay Sanitized!
+                                  </ser:p3>      
+              </ser:SendMessage>  
+            </soapenv:Body>
+          </soapenv:Envelope>`;
+
+          allSms.push[smsBody];
+
+        sendSms(smsBody);
+        console.log(allSms);
       }
     }
   });
@@ -43,10 +67,10 @@ const getServiceAdvisor = (entry) => {
 };
 
 const getContactNumber = (entry) => {
-  return entry === "number";
+  return entry === "Contact Number";
 };
 const getTime = (entry) => {
-  return entry === "time";
+  return entry === "Time";
 };
 
 const upload = async (req, res) => {
@@ -62,9 +86,9 @@ const upload = async (req, res) => {
       let service_advisor = "";
       let contact_number = "";
       let time = "";
-      for (let index = 0; index < rows.length; index++) {
+      for (let index = 2; index < rows.length; index++) {
         const entry = rows[index];
-        if (index === 0) {
+        if (index === 2) {
           service_advisor = entry.findIndex(getServiceAdvisor);
           contact_number = entry.findIndex(getContactNumber);
           time = entry.findIndex(getTime);
@@ -91,7 +115,27 @@ const upload = async (req, res) => {
               </SENDBATCH>
            </XML>`;
 
-          content.push(body);
+           const smsBody =  `<?xml version="1.0" encoding="utf-8"?>
+           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://systinet.com/wsdl/bsi/service/"> 
+             <soapenv:Header/>   
+              <soapenv:Body>    
+                 <ser:SendMessage> 	   
+                      <ser:p0>${username}</ser:p0> 	    
+                          <ser:p1>${type}</ser:p1> 	   
+                               <ser:p2>${entry[contact_numer]}</ser:p2> 	
+                                       <ser:p3>Dear Valued Client, thank you for booking your vehicle in at SMG Century City. 
+                                         Your vehicle is booked for Monday  at ${entry[time]}  with ${entry[service_advisor]}. To adhere to the current social distancing measures,
+                                         we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you.
+                                         Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues   
+                                         prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be 
+                                         able to make arrangements for your own transportation. We look forward to welcoming you to the dealership.
+                                         Stay Safe, Stay Healthy, Stay Sanitized!
+                                       </ser:p3>      
+                   </ser:SendMessage>  
+                 </soapenv:Body>
+               </soapenv:Envelope>`;
+          sendSms(smsBody);
+          content.push(smsBody);
         }
       }
 
