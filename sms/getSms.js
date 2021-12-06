@@ -101,7 +101,7 @@ const upload = async (req, res) => {
           service_advisor = entry.findIndex(getServiceAdvisor);
           contact_number = entry.findIndex(getContactNumber);
           time = entry.findIndex(getTime);
-        } else {
+        } else { 
           const uid = 1234;
           const username = "anna";
           const password = "password";
